@@ -1,0 +1,20 @@
+<h1>Twitter summary for @<%=@username %></h1>
+
+<img align="left" src="<%=@my_profile[:profile_image_url].split("_normal").join%>" height=140px/>
+Name: <%= @my_profile[:name] %><br>
+Twitter Handle: @<%= @my_profile[:screen_name] %><br>
+Location: <%= @my_profile[:location] %><br>
+Description: <%= @my_profile[:description] %><br>
+Followers: <%= @my_profile[:followers_count] %><br>
+Following: <%= @my_profile[:friends_count] %><br>
+Tweets: <%= @my_profile[:statuses_count] %><br>
+
+<p>Here are some recent tweets from <%=@username %>:</p>
+<% @my_tweets.each do |tweet| %>
+  <ul>
+    <li><%= tweet[:text] %>
+      <a href="https://twitter.com/<%=@username%>/status/<%=tweet[:id]%>">Tweet</a><br>
+      <img src="<%=tweet.media.first[:media_url] unless tweet.media.empty? %>" width=250px />
+    </li>
+  </ul>
+<% end %>

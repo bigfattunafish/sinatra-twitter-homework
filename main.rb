@@ -38,6 +38,15 @@ configure do
   end
 end
 
+get '/' do
+  erb :getusername
+end
+
+post '/' do
+  @handle = params[:target_handle]
+  redirect to("/tweets/#{@handle}")
+end
+
 get '/tweets/:username' do
   # This gets the username from the params hash
   @username = params[:username]
@@ -45,11 +54,9 @@ get '/tweets/:username' do
   # This queries Twitter's API and asks for the most recent Tweets from a user
   # The tweets are stored in an Array called @my_tweets
   @my_tweets = Twitter.user_timeline(@username)
-
-  # The following 3 lines will output the text from each tweet from a user
-  @my_tweets.each do |tweet|
-    tweet[:text]
-  end
-
+  @my_profile = Twitter.user(@username)
   erb :tweets
 end
+
+
+# <img src="<%= tweet.media.first[:media_url] unless tweet[:media].empty? %>" /> %>
